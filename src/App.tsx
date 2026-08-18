@@ -4,6 +4,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import Navbar from './customer/components/Navbar';
 import { ThemeProvider } from "@mui/material/styles";
 import customTheme from "./Theme/CustomTheme"
+import Home from './customer/pages/Home/Home';
 
 const App = () => {
   return (
@@ -11,6 +12,7 @@ const App = () => {
     <ThemeProvider theme={customTheme}>
       <div>
       <Navbar/>
+      <Home/>
 
       </div>
 

@@ -21,10 +21,11 @@ const Navbar = () => {
                     <div className='flex items-center gap-5'>
 
                         <div className='flex items-center gap-2'>
-                            <IconButton>
+                            {!isLarge &&  <IconButton>
                                 <MenuIcon />
 
-                            </IconButton>
+                            </IconButton>}
+                           
 
                             <h1 className='logo cursor-pointer text-lg md:text-2xl text-[#00927c]'>Zosh Bazar</h1>
                         </div>
