@@ -8,6 +8,7 @@ import Home from './customer/pages/Home/Home';
 import Deal from './customer/pages/Home/Deal/Deal';
 import ShopByCategory from './customer/pages/Home/ShopByCategory/ShopByCategory';
 import Product from './customer/pages/Product/Product';
+import ProductDetails from './customer/pages/PageDetails/ProductDetails';
 
 const App = () => {
   return (
@@ -16,7 +17,8 @@ const App = () => {
       <div>
       <Navbar/>
       {/* <Home/> */}
-      <Product/>
+      {/* <Product/> */}
+      <ProductDetails/>
       
 
       </div>

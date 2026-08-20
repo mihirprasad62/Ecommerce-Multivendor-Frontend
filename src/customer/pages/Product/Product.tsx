@@ -3,7 +3,7 @@ import FilterSection from './FilterSection'
 import ProductCard from './ProductCard'
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { Box, Divider, IconButton } from '@mui/material';
+import { Box, Divider, IconButton, Pagination } from '@mui/material';
 import { FilterAlt } from '@mui/icons-material';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -15,8 +15,13 @@ const Product = () => {
     const isLarge = useMediaQuery(theme.breakpoints.up("lg"));
 
     const [sort, setSort] = useState();
+    const [page, setPage] = useState(1);
     const handleSortChange = (event: any) => {
         setSort(event.target.value)
+    }
+
+    const handlePageChange = (value: number) => {
+        setPage(value)
     }
     return (
         <>
@@ -53,7 +58,7 @@ const Product = () => {
                                 }
                             </div>
 
-                            <FormControl size='small' sx={{width:"200px"}}>
+                            <FormControl size='small' sx={{ width: "200px" }}>
                                 <InputLabel id="demo-simple-select-label">Sort</InputLabel>
                                 <Select
                                     labelId="demo-simple-select-label"
@@ -69,15 +74,26 @@ const Product = () => {
                             </FormControl>
 
                         </div>
-                        <Divider/>
+                        <Divider />
 
                         <section className='products_section grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-5 px-5 justify-center'>
 
-                            {[1,2,3,4,5,6,7,8].map((item)=><ProductCard />)}
+                            {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => <ProductCard />)}
 
-                            
+
                         </section>
+                        <div className='flex justify-center py-10'>
+                        <Pagination
+
+                            onChange={(e, value) => handlePageChange(value)}
+                            count={10}
+                            variant="outlined"
+                            color='primary'
+                             />
                     </div>
+                    </div>
+
+                    
 
                 </div>
             </div>
