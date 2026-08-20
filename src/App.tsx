@@ -9,6 +9,7 @@ import Deal from './customer/pages/Home/Deal/Deal';
 import ShopByCategory from './customer/pages/Home/ShopByCategory/ShopByCategory';
 import Product from './customer/pages/Product/Product';
 import ProductDetails from './customer/pages/PageDetails/ProductDetails';
+import Review from './customer/pages/Review/Review';
 
 const App = () => {
   return (
@@ -18,7 +19,8 @@ const App = () => {
       <Navbar/>
       {/* <Home/> */}
       {/* <Product/> */}
-      <ProductDetails/>
+      {/* <ProductDetails/> */}
+      <Review/>
       
 
       </div>

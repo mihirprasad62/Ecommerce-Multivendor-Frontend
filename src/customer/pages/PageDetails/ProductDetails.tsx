@@ -5,6 +5,7 @@ import { Button, Divider } from '@mui/material';
 import { AddShoppingCart, FavoriteBorder, LocalShipping, Remove, Shield, Wallet, WorkspacePremium } from '@mui/icons-material';
 import AddIcon from '@mui/icons-material/Add';
 import SimilarProduct from './SimilarProduct';
+import ReviewCard from '../Review/ReviewCard';
 
 const ProductDetails = () => {
   const [quantity,setQuantity]=useState(1);
@@ -105,6 +106,10 @@ const ProductDetails = () => {
           <p>
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Provident delectus accusamus itaque aspernatur sit error voluptatem, quae corporis tempore dolore, suscipit perferendis praesentium quasi autem quis velit nemo non veniam!
           </p>
+        </div>
+        <div className='mt-7 space-y-5'>
+          <ReviewCard/>
+          <Divider/>
         </div>
           </section>
        </div>
