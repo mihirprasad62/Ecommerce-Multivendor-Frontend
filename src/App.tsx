@@ -12,6 +12,7 @@ import ProductDetails from './customer/pages/PageDetails/ProductDetails';
 import Review from './customer/pages/Review/Review';
 import Cart from './customer/pages/Cart/Cart';
 import Checkout from './customer/pages/Checkout/Checkout';
+import Account from './customer/pages/Account/Account';
 
 const App = () => {
   return (
@@ -24,7 +25,8 @@ const App = () => {
       {/* <ProductDetails/> */}
       {/* <Review/> */}
       {/* <Cart/> */}
-      <Checkout/>
+      {/* <Checkout/> */}
+      <Account/>
       
 
       </div>
