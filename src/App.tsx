@@ -10,6 +10,7 @@ import ShopByCategory from './customer/pages/Home/ShopByCategory/ShopByCategory'
 import Product from './customer/pages/Product/Product';
 import ProductDetails from './customer/pages/PageDetails/ProductDetails';
 import Review from './customer/pages/Review/Review';
+import Cart from './customer/pages/Cart/Cart';
 
 const App = () => {
   return (
@@ -20,7 +21,8 @@ const App = () => {
       {/* <Home/> */}
       {/* <Product/> */}
       {/* <ProductDetails/> */}
-      <Review/>
+      {/* <Review/> */}
+      <Cart/>
       
 
       </div>
