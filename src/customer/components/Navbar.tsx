@@ -9,12 +9,14 @@ import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import CategorySheet from './CategorySheet';
 import { rootCategory } from "../../data/category/mainCategory";
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
     const theme = useTheme();
     const isLarge = useMediaQuery(theme.breakpoints.up("lg"));
     const [selectedCategory, setSelectedCategory] = useState("men");
     const [showCategorySheet, setShowCategorySheet] = useState(false);
+    const navigate=useNavigate()
     return (
         <>
 
@@ -31,7 +33,7 @@ const Navbar = () => {
                             </IconButton>}
 
 
-                            <h1 className='logo cursor-pointer text-lg md:text-2xl text-[#00927c]'>Zosh Bazar</h1>
+                            <h1 onClick={()=>navigate("/")} className='logo cursor-pointer text-lg md:text-2xl text-[#00927c]'>Zosh Bazar</h1>
                         </div>
                         {/* categories */}
                         <ul className="flex items-center font-medium text-gray-800 cursor-pointer">
@@ -60,7 +62,7 @@ const Navbar = () => {
                         </IconButton>
                         {/* 2. login button */}
                         {
-                            false ? <Button className='flex items-center gap-2'>
+                            true ? <Button onClick={()=>navigate('/account/orders')} className='flex items-center gap-2'>
                                 <Avatar
                                     sx={{ width: 29, height: 29 }} src='https://cdn.pixabay.com/photo/2015/04/15/09/28/head-723540_640.jpg' />
                                 <h1 className='font-semibold hidden lg:block'>Zosh</h1>
@@ -73,8 +75,8 @@ const Navbar = () => {
                             <FavoriteBorderIcon sx={{ fontSize: 29 }} />
                         </IconButton>
                         {/* 4. cart icon */}
-                        <IconButton>
-                            <AddShoppingCartIcon className='text-gray-700' sx={{ fontSize: 29 }} />
+                        <IconButton onClick={()=>navigate('/cart')}>
+                            <AddShoppingCartIcon  className='text-gray-700' sx={{ fontSize: 29 }} />
                         </IconButton>
                         {/* 5. become seller button */}
                         {
