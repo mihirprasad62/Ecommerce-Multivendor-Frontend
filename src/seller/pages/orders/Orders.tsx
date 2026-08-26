@@ -1,8 +1,14 @@
 import React from 'react'
+import OrdersTable from './OrdersTable'
 
 const Orders = () => {
   return (
-    <div>Orders</div>
+    <>
+    <div>
+      <h1 className='font-bold mb-5 text-xl'>All Orders</h1>
+      <OrdersTable/>
+    </div>
+    </>
   )
 }
 

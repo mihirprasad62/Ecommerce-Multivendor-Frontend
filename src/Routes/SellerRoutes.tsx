@@ -5,8 +5,9 @@ import AddProducts from '../seller/pages/products/AddProducts'
 import Orders from '../seller/pages/orders/Orders'
 import Profile from '../seller/pages/Account/Profile'
 import Payment from '../seller/pages/Payment/Payment'
-import Transaction from '../seller/pages/Transaction/Transaction'
+//import Transaction from '../seller/pages/Transaction/Transaction'
 import Products from '../seller/pages/products/Products'
+import Transaction from '../seller/pages/Payment/Transaction'
 
 const SellerRoutes = () => {
     return (
