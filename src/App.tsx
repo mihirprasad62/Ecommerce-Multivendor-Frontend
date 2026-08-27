@@ -18,23 +18,24 @@ import BecomeSeller from './customer/pages/Become_Seller/BecomeSeller';
 import SellerDashboard from './seller/pages/Seller_Dashboard/SellerDashboard';
 import AdminDashboard from './admin/Pages/Dashboard/AdminDashboard';
 import { fetchProducts } from './State/fetchProduct';
+import { useAppDispatch } from './State/Store';
+import { fetchSellerProfile } from './State/seller/sellerSlice';
 
 const App = () => {
-  useEffect(()=>{
-    fetchProducts()
-  },[])
+  const dispatch=useAppDispatch()
+  useEffect(() => {
+
+        const jwt = localStorage.getItem("jwt");
+
+        if (jwt) {
+            dispatch(fetchSellerProfile(jwt));
+        }
+
+    },[dispatch] );
   return (
     
     <ThemeProvider theme={customTheme}>
       <div>
-      {/* <Navbar/> */}
-      {/* <Home/> */}
-      {/* <Product/> */}
-      {/* <ProductDetails/> */}
-      {/* <Review/> */}
-      {/* <Cart/> */}
-      {/* <Checkout/> */}
-      {/* <Account/> */}
     <Navbar/>
       <Routes>
         <Route path='/' element={<Home/>}/>
