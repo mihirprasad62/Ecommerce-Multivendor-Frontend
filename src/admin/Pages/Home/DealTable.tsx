@@ -6,6 +6,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { Button } from '@mui/material';
+import { Delete, Edit } from '@mui/icons-material';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -45,17 +47,18 @@ const rows = [
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
-export default function ElectronicTable() {
+export default function DealTable() {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>Dessert (100g serving)</StyledTableCell>
-            <StyledTableCell align="right">Calories</StyledTableCell>
-            <StyledTableCell align="right">Fat&nbsp;(g)</StyledTableCell>
-            <StyledTableCell align="right">Carbs&nbsp;(g)</StyledTableCell>
-            <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell>
+            <StyledTableCell>No</StyledTableCell>
+            <StyledTableCell align="right">Images</StyledTableCell>
+            <StyledTableCell align="right">Category</StyledTableCell>
+            <StyledTableCell align="right">Discount</StyledTableCell>
+            <StyledTableCell align="right">Update</StyledTableCell>
+            <StyledTableCell align="right">Delete</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -67,7 +70,16 @@ export default function ElectronicTable() {
               <StyledTableCell align="right">{row.calories}</StyledTableCell>
               <StyledTableCell align="right">{row.fat}</StyledTableCell>
               <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-              <StyledTableCell align="right">{row.protein}</StyledTableCell>
+              <StyledTableCell align="right">
+                <Button>
+                    <Edit sx={{color:'gray'}}/>
+                </Button>
+              </StyledTableCell>
+              <StyledTableCell align="right">
+                <Button>
+                    <Delete sx={{color:'red'}}/>
+                </Button>
+              </StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
