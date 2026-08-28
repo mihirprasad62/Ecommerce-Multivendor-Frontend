@@ -3,10 +3,11 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 
 import type { TypedUseSelectorHook } from "react-redux";
+import sellerSlice from "./seller/sellerSlice"
 
 const rootReducer = combineReducers({
 
-    // Add your reducers here
+    seller:sellerSlice
 
 });
 

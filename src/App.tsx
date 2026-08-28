@@ -13,16 +13,18 @@ import Review from './customer/pages/Review/Review';
 import Cart from './customer/pages/Cart/Cart';
 import Checkout from './customer/pages/Checkout/Checkout';
 import Account from './customer/pages/Account/Account';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import BecomeSeller from './customer/pages/Become_Seller/BecomeSeller';
 import SellerDashboard from './seller/pages/Seller_Dashboard/SellerDashboard';
 import AdminDashboard from './admin/Pages/Dashboard/AdminDashboard';
 import { fetchProducts } from './State/fetchProduct';
-import { useAppDispatch } from './State/Store';
+import { useAppDispatch, useAppSelector } from './State/Store';
 import { fetchSellerProfile } from './State/seller/sellerSlice';
 
 const App = () => {
   const dispatch=useAppDispatch()
+  const {seller}=useAppSelector(store=>store)
+  const navigate=useNavigate()
   useEffect(() => {
 
         const jwt = localStorage.getItem("jwt");
@@ -32,6 +34,12 @@ const App = () => {
         }
 
     },[dispatch] );
+
+    useEffect(()=>{
+      if(seller.profile){
+        navigate("/seller")
+      }
+    },[seller.profile])
   return (
     
     <ThemeProvider theme={customTheme}>
