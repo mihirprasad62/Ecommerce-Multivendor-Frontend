@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import FilterSection from './FilterSection'
 import ProductCard from './ProductCard'
 import { useTheme } from "@mui/material/styles";
@@ -9,6 +9,9 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { useAppDispatch, useAppSelector } from '../../../State/Store';
+import { fetchAllProducts } from '../../../State/customer/productSlice';
+import { useParams, useSearchParams } from 'react-router-dom';
 
 const Product = () => {
     const theme = useTheme();
@@ -16,6 +19,14 @@ const Product = () => {
 
     const [sort, setSort] = useState();
     const [page, setPage] = useState(1);
+
+    const dispatch=useAppDispatch()
+
+    const [searchParam,setSearchParam]=useSearchParams()
+
+    const {category}=useParams()
+
+    const {product}=useAppSelector(store=>store)
     const handleSortChange = (event: any) => {
         setSort(event.target.value)
     }
@@ -23,6 +34,48 @@ const Product = () => {
     const handlePageChange = (value: number) => {
         setPage(value)
     }
+
+   useEffect(() => {
+
+    const priceValue = searchParam.get("price");
+
+    const [minPrice, maxPrice] =
+        priceValue?.split("-") || [];
+
+    const color = searchParam.get("color");
+
+    const discountValue = searchParam.get("discount");
+
+    const minDiscount = discountValue
+        ? Number(discountValue)
+        : undefined;
+
+    const newFilter = {
+
+        category: category,
+
+        color: color || undefined,
+
+        minPrice: minPrice
+            ? Number(minPrice)
+            : undefined,
+
+        maxPrice: maxPrice
+            ? Number(maxPrice)
+            : undefined,
+
+        minDiscount,
+
+        pageNumber: page - 1,
+
+        sort: sort || undefined
+    };
+
+    console.log("FILTER SENT TO BACKEND :::", newFilter);
+
+    dispatch(fetchAllProducts(newFilter));
+
+}, [category, searchParam, page, sort, dispatch]);
     return (
         <>
 
@@ -78,7 +131,7 @@ const Product = () => {
 
                         <section className='products_section grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-5 px-5 justify-center'>
 
-                            {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => <ProductCard />)}
+                            {product.products.map((item) => <ProductCard item={item} />)}
 
 
                         </section>

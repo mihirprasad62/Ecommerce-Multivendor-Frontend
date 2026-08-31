@@ -3,8 +3,9 @@ import "./productCard.css"
 import { Button } from '@mui/material';
 import { Favorite, ModeComment } from '@mui/icons-material';
 import { teal } from '@mui/material/colors';
+import type { Product } from '../../../types/ProductTypes';
 
-
+/*
 const images=[
     "https://assets.myntassets.com/assets/images/2025/APRIL/5/UZcUaWse_fc40bb8b542f4541b7be5c487a6108e9.jpg",
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfyQJgtGuB8KRf4rMGnGyE5KQOFjn_0nzwlN_fU3hae3lezsBDQjTQcu3P&s=10",
@@ -14,8 +15,9 @@ const images=[
 
 
 ]
+    */
 
-const ProductCard = () => {
+const ProductCard = ({item}:{item:Product}) => {
     const[currentImage,setCurrentImage]=useState(0);
     const[isHovered,setIsHovered]=useState(false);
 
@@ -23,7 +25,7 @@ const ProductCard = () => {
         let interval:any 
         if(isHovered){
             interval=setInterval(()=>{
-                setCurrentImage((prevImage)=>(prevImage+1)% images.length)
+                setCurrentImage((prevImage)=>(prevImage+1)% item.images.length)
             },1000)
         }else if(interval){
             clearInterval(interval);
@@ -39,7 +41,7 @@ const ProductCard = () => {
         onMouseLeave={()=>setIsHovered(false)}
         >
              {
-                images.map((item,index)=><img
+                item.images.map((item,index)=><img
                 className='card-media object-top'
                 src={item} alt=""
                 style={{transform:`translateX(${(index-currentImage)*100}%)`}}
@@ -60,18 +62,18 @@ const ProductCard = () => {
         </div>
         <div className='details pt-3 space-y-1 group-hover-effect rounded-md'>
              <div className='name'>
-                <h1>Niky</h1>
-                <p>Blue Shirt</p>
+                <h1>{item.seller?.businessDetails?.businessName}</h1>
+                <p>{item.title}</p>
              </div>
              <div className='price flex items-center gap-3'>
                 <span className='font-sans text-gray-800'>
-                    ₹ 400
+                    {item.sellingPrice}
                 </span>
                 <span className='thin-line-through'>
-                    999
+                    {item.mrpPrice}
                 </span>
                 <span className='text-primary font-semibold'>
-                    60%
+                    {item.discountPercent} %
                 </span>
              </div>
         </div>

@@ -65,8 +65,8 @@ const AddProduct = () => {
             color: "",
             sizes: "",
             category: "",
-            secondCategory: "",
-            thirdCategory: "",
+            category2: "",
+            category3: "",
         },
 
         // validationSchema: productSchema,
@@ -488,10 +488,10 @@ const AddProduct = () => {
                         <TextField
                             select
                             fullWidth
-                            id="secondCategory"
-                            name="secondCategory"
+                            id="category2"
+                            name="category2"
                             label="Second Category *"
-                            value={formik.values.secondCategory}
+                            value={formik.values.category2}
                             onChange={(event) => {
 
                                 formik.handleChange(event);
@@ -504,12 +504,12 @@ const AddProduct = () => {
                             }}
                             onBlur={formik.handleBlur}
                             error={
-                                formik.touched.secondCategory &&
-                                Boolean(formik.errors.secondCategory)
+                                formik.touched.category2 &&
+                                Boolean(formik.errors.category2)
                             }
                             helperText={
-                                formik.touched.secondCategory &&
-                                formik.errors.secondCategory
+                                formik.touched.category2 &&
+                                formik.errors.category2
                             }
                         >
 
@@ -537,19 +537,19 @@ const AddProduct = () => {
                         <TextField
                             select
                             fullWidth
-                            id="thirdCategory"
-                            name="thirdCategory"
+                            id="category3"
+                            name="category3"
                             label="Third Category *"
-                            value={formik.values.thirdCategory}
+                            value={formik.values.category3}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             error={
-                                formik.touched.thirdCategory &&
-                                Boolean(formik.errors.thirdCategory)
+                                formik.touched.category3 &&
+                                Boolean(formik.errors.category3)
                             }
                             helperText={
-                                formik.touched.thirdCategory &&
-                                formik.errors.thirdCategory
+                                formik.touched.category3 &&
+                                formik.errors.category3
                             }
                         >
 
@@ -557,7 +557,7 @@ const AddProduct = () => {
                                 .filter(
                                     (category: any) =>
                                         category.parentCategoryId ===
-                                        formik.values.secondCategory
+                                        formik.values.category2
                                 )
                                 .map((category: any) => (
 

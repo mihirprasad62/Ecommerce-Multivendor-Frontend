@@ -22,3 +22,24 @@ export const sellerLogin = createAsyncThunk<any, any>(
         }
     }
 );
+
+
+export const logout = createAsyncThunk<any,any>(
+    "/auth/logout",
+    async (navigate, { rejectWithValue }) => {
+        try {
+
+            localStorage.clear()
+            console.log("logout success")
+            navigate("/")
+
+        } catch (error: any) {
+
+            console.log("seller login error ", error);
+
+            return rejectWithValue(
+                error.response?.data || "Seller login failed"
+            );
+        }
+    }
+);
