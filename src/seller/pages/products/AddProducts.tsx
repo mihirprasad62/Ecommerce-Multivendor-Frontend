@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import {
     Grid,
     TextField,
@@ -7,12 +8,29 @@ import {
     CircularProgress,
     MenuItem,
 } from "@mui/material";
+
 import {
     AddPhotoAlternate,
     Close as CloseIcon,
 } from "@mui/icons-material";
+
 import { useFormik } from "formik";
 import * as Yup from "yup";
+
+import { useAppDispatch } from "../../../State/Store";
+import { createProduct } from "../../../State/seller/sellerProductSlice";
+import { menLevelTwo } from "../../../data/category/level_two/menLevelTwo";
+import { womenLevelTwo } from "../../../data/category/level_two/womenLevelTwo";
+import { electroniclevelTwo } from "../../../data/category/level_two/electroniclevelTwo";
+import { furnitureLevelTwo } from "../../../data/category/level_two/furnitureLevelTwo";
+import { menLevelThree } from "../../../data/category/level_three/menLevelThree";
+import { womenLevelThree } from "../../../data/category/level_three/womenLevelThree";
+import { electroniclevelThree } from "../../../data/category/level_three/electroniclevelThree";
+import { furnitureLevelThree } from "../../../data/category/level_three/furnitureLevelThree";
+import { colors } from "../../../data/filter/colors";
+import { rootCategory } from "../../../data/category/mainCategory";
+
+
 
 const productSchema = Yup.object({
     title: Yup.string().required("Title is required"),
@@ -31,11 +49,15 @@ const productSchema = Yup.object({
 });
 
 const AddProduct = () => {
+
     const [uploadImage, setUploadImage] = useState(false);
+    const [openSnackBar, setOpenSnackBar] = useState(false);
+
+    const dispatch = useAppDispatch();
 
     const formik = useFormik({
         initialValues: {
-            images: [] as string[],
+            images: [],
             title: "",
             description: "",
             mrpPrice: "",
@@ -47,12 +69,18 @@ const AddProduct = () => {
             thirdCategory: "",
         },
 
-        validationSchema: productSchema,
+        // validationSchema: productSchema,
 
         onSubmit: (values) => {
             console.log("Product Form Submitted");
             console.log(values);
-            alert("Product form submitted successfully!");
+
+            dispatch(
+                createProduct({
+                    request: values,
+                    jwt: localStorage.getItem("jwt"),
+                })
+            );
         },
     });
 
@@ -60,6 +88,7 @@ const AddProduct = () => {
         event: React.ChangeEvent<HTMLInputElement>
     ) => {
         const file = event.target.files?.[0];
+
         if (!file) return;
 
         setUploadImage(true);
@@ -84,31 +113,91 @@ const AddProduct = () => {
         formik.setFieldValue("images", updatedImages);
     };
 
+    /*
+     * SECOND CATEGORY
+     */
+    const getSecondCategories = () => {
+
+        switch (formik.values.category) {
+
+            case "men":
+                return menLevelTwo;
+
+            case "women":
+                return womenLevelTwo;
+
+            case "electronics":
+                return electroniclevelTwo;
+
+            case "home_furniture":
+                return furnitureLevelTwo;
+
+            default:
+                return [];
+        }
+    };
+
+    /*
+     * THIRD CATEGORY
+     */
+    const getThirdCategories = () => {
+
+        switch (formik.values.category) {
+
+            case "men":
+                return menLevelThree;
+
+            case "women":
+                return womenLevelThree;
+
+            case "electronics":
+                return electroniclevelThree;
+
+            case "home_furniture":
+                return furnitureLevelThree;
+
+            default:
+                return [];
+        }
+    };
+
     return (
         <div className="w-full">
+
             <form
                 className="space-y-5 p-4 md:p-6"
                 onSubmit={formik.handleSubmit}
             >
+
                 <Grid container spacing={2.5}>
 
                     {/* Images */}
+
                     <Grid size={{ xs: 12 }}>
+
                         <div className="flex flex-wrap gap-3">
 
                             <label
                                 htmlFor="fileInput"
                                 className="relative"
                             >
+
                                 <span className="w-24 h-24 cursor-pointer flex items-center justify-center p-3 border rounded-md border-gray-300 hover:border-primary hover:bg-gray-50 transition">
+
                                     <AddPhotoAlternate className="text-gray-600" />
+
                                 </span>
 
                                 {uploadImage && (
+
                                     <div className="absolute inset-0 w-24 h-24 flex justify-center items-center bg-white/70 rounded-md">
+
                                         <CircularProgress size={25} />
+
                                     </div>
+
                                 )}
+
                             </label>
 
                             <input
@@ -120,8 +209,14 @@ const AddProduct = () => {
                             />
 
                             <div className="flex flex-wrap gap-3">
+
                                 {formik.values.images.map((image, index) => (
-                                    <div className="relative" key={index}>
+
+                                    <div
+                                        className="relative"
+                                        key={index}
+                                    >
+
                                         <img
                                             className="w-24 h-24 object-cover rounded-md border"
                                             src={image}
@@ -142,16 +237,27 @@ const AddProduct = () => {
                                                 },
                                             }}
                                         >
-                                            <CloseIcon sx={{ fontSize: "1rem" }} />
+
+                                            <CloseIcon
+                                                sx={{ fontSize: "1rem" }}
+                                            />
+
                                         </IconButton>
+
                                     </div>
+
                                 ))}
+
                             </div>
+
                         </div>
+
                     </Grid>
 
                     {/* Title */}
+
                     <Grid size={{ xs: 12 }}>
+
                         <TextField
                             fullWidth
                             id="title"
@@ -169,10 +275,13 @@ const AddProduct = () => {
                                 formik.errors.title
                             }
                         />
+
                     </Grid>
 
                     {/* Description */}
+
                     <Grid size={{ xs: 12 }}>
+
                         <TextField
                             multiline
                             rows={4}
@@ -192,10 +301,13 @@ const AddProduct = () => {
                                 formik.errors.description
                             }
                         />
+
                     </Grid>
 
                     {/* MRP Price */}
+
                     <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
+
                         <TextField
                             fullWidth
                             id="mrpPrice"
@@ -214,10 +326,13 @@ const AddProduct = () => {
                                 formik.errors.mrpPrice
                             }
                         />
+
                     </Grid>
 
                     {/* Selling Price */}
+
                     <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
+
                         <TextField
                             fullWidth
                             id="sellingPrice"
@@ -236,10 +351,13 @@ const AddProduct = () => {
                                 formik.errors.sellingPrice
                             }
                         />
+
                     </Grid>
 
                     {/* Color */}
+
                     <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
+
                         <TextField
                             select
                             fullWidth
@@ -258,17 +376,28 @@ const AddProduct = () => {
                                 formik.errors.color
                             }
                         >
-                            <MenuItem value="Red">Red</MenuItem>
-                            <MenuItem value="Blue">Blue</MenuItem>
-                            <MenuItem value="Green">Green</MenuItem>
-                            <MenuItem value="Black">Black</MenuItem>
-                            <MenuItem value="White">White</MenuItem>
-                            <MenuItem value="Yellow">Yellow</MenuItem>
+
+                            {colors.map((color: any) => (
+
+                                <MenuItem
+                                    key={color.name}
+                                    value={color.name}
+                                >
+
+                                    {color.name}
+
+                                </MenuItem>
+
+                            ))}
+
                         </TextField>
+
                     </Grid>
 
                     {/* Sizes */}
+
                     <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
+
                         <TextField
                             select
                             fullWidth
@@ -287,16 +416,21 @@ const AddProduct = () => {
                                 formik.errors.sizes
                             }
                         >
+
                             <MenuItem value="S">S</MenuItem>
                             <MenuItem value="M">M</MenuItem>
                             <MenuItem value="L">L</MenuItem>
                             <MenuItem value="XL">XL</MenuItem>
                             <MenuItem value="XXL">XXL</MenuItem>
+
                         </TextField>
+
                     </Grid>
 
                     {/* Category */}
+
                     <Grid size={{ xs: 12, md: 4 }}>
+
                         <TextField
                             select
                             fullWidth
@@ -304,7 +438,21 @@ const AddProduct = () => {
                             name="category"
                             label="Category *"
                             value={formik.values.category}
-                            onChange={formik.handleChange}
+                            onChange={(event) => {
+
+                                formik.handleChange(event);
+
+                                formik.setFieldValue(
+                                    "secondCategory",
+                                    ""
+                                );
+
+                                formik.setFieldValue(
+                                    "thirdCategory",
+                                    ""
+                                );
+
+                            }}
                             onBlur={formik.handleBlur}
                             error={
                                 formik.touched.category &&
@@ -315,15 +463,28 @@ const AddProduct = () => {
                                 formik.errors.category
                             }
                         >
-                            <MenuItem value="Women">Women</MenuItem>
-                            <MenuItem value="Men">Men</MenuItem>
-                            <MenuItem value="Electronics">Electronics</MenuItem>
-                            <MenuItem value="Home">Home & Furniture</MenuItem>
+
+                            {rootCategory.map((category: any) => (
+
+                                <MenuItem
+                                    key={category.categoryId}
+                                    value={category.categoryId}
+                                >
+
+                                    {category.name}
+
+                                </MenuItem>
+
+                            ))}
+
                         </TextField>
+
                     </Grid>
 
                     {/* Second Category */}
+
                     <Grid size={{ xs: 12, md: 4 }}>
+
                         <TextField
                             select
                             fullWidth
@@ -331,7 +492,16 @@ const AddProduct = () => {
                             name="secondCategory"
                             label="Second Category *"
                             value={formik.values.secondCategory}
-                            onChange={formik.handleChange}
+                            onChange={(event) => {
+
+                                formik.handleChange(event);
+
+                                formik.setFieldValue(
+                                    "thirdCategory",
+                                    ""
+                                );
+
+                            }}
                             onBlur={formik.handleBlur}
                             error={
                                 formik.touched.secondCategory &&
@@ -342,15 +512,28 @@ const AddProduct = () => {
                                 formik.errors.secondCategory
                             }
                         >
-                            <MenuItem value="Clothing">Clothing</MenuItem>
-                            <MenuItem value="Saree">Saree</MenuItem>
-                            <MenuItem value="Shirts">Shirts</MenuItem>
-                            <MenuItem value="Shoes">Shoes</MenuItem>
+
+                            {getSecondCategories().map((category: any) => (
+
+                                <MenuItem
+                                    key={category.categoryId}
+                                    value={category.categoryId}
+                                >
+
+                                    {category.name}
+
+                                </MenuItem>
+
+                            ))}
+
                         </TextField>
+
                     </Grid>
 
                     {/* Third Category */}
+
                     <Grid size={{ xs: 12, md: 4 }}>
+
                         <TextField
                             select
                             fullWidth
@@ -369,17 +552,34 @@ const AddProduct = () => {
                                 formik.errors.thirdCategory
                             }
                         >
-                            <MenuItem value="Sarees">Sarees</MenuItem>
-                            <MenuItem value="Casual">Casual</MenuItem>
-                            <MenuItem value="Formal">Formal</MenuItem>
-                            <MenuItem value="Party Wear">
-                                Party Wear
-                            </MenuItem>
+
+                            {getThirdCategories()
+                                .filter(
+                                    (category: any) =>
+                                        category.parentCategoryId ===
+                                        formik.values.secondCategory
+                                )
+                                .map((category: any) => (
+
+                                    <MenuItem
+                                        key={category.categoryId}
+                                        value={category.categoryId}
+                                    >
+
+                                        {category.name}
+
+                                    </MenuItem>
+
+                                ))}
+
                         </TextField>
+
                     </Grid>
 
                     {/* Submit */}
+
                     <Grid size={{ xs: 12 }}>
+
                         <Button
                             type="submit"
                             fullWidth
@@ -393,12 +593,17 @@ const AddProduct = () => {
                                 },
                             }}
                         >
+
                             ADD PRODUCT
+
                         </Button>
+
                     </Grid>
 
                 </Grid>
+
             </form>
+
         </div>
     );
 };

@@ -4,10 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 
 import type { TypedUseSelectorHook } from "react-redux";
 import sellerSlice from "./seller/sellerSlice"
+import sellerProductSlice from "./seller/sellerProductSlice"
 
 const rootReducer = combineReducers({
 
-    seller:sellerSlice
+    seller:sellerSlice,
+    sellerProduct:sellerProductSlice
 
 });
 
