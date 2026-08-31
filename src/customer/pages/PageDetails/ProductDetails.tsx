@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import StarIcon from '@mui/icons-material/Star';
 import { teal } from '@mui/material/colors';
 import { Button, Divider } from '@mui/material';
@@ -6,26 +6,47 @@ import { AddShoppingCart, FavoriteBorder, LocalShipping, Remove, Shield, Wallet,
 import AddIcon from '@mui/icons-material/Add';
 import SimilarProduct from './SimilarProduct';
 import ReviewCard from '../Review/ReviewCard';
+import { useAppDispatch, useAppSelector } from '../../../State/Store';
+import { useParams } from 'react-router-dom';
+import { fetchProductById } from '../../../State/customer/productSlice';
 
 const ProductDetails = () => {
   const [quantity,setQuantity]=useState(1);
+  const product=useAppSelector(store=>store.product)
+  console.log("PRODUCT STATE =", product);
+  const[activeImage,setActiveImage]=useState(0)
+
+   const { productId } = useParams();
+
+   const dispatch = useAppDispatch();
+     useEffect(() => {
+
+        if (productId) {
+            dispatch(fetchProductById(productId));
+        }
+
+    }, [productId, dispatch]);
+
+  const handleActiveImage=(val:number)=>()=>{
+    setActiveImage(val)
+  }
   return (
     <>
     <div className='px-5 lg:px-20 pt-10'>
        <div className='grid grid-cols-1 lg:grid-cols-2 gap-2'>
           <section className='flex flex-col lg:flex-row gap-5'>
             <div className='w-full lg:w-[15%] flex flex-wrap lg:flex-col gap-3'>
-              { [1,1,1,1].map((item)=><img className='lg:w-full w-[50px] cursor-pointer rounded-md' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQf3K5mFn6vKygkCVbFzkbsf0Dg-3N03Ljjv1LPG0LNAi7mfG7Z8hBNe5w&s=10'/>)}
+              { product.product?.images.map((item,index)=><img onClick={()=>handleActiveImage(index)} className='lg:w-full w-[50px] cursor-pointer rounded-md' src={item}/>)}
             </div>
 
             <div className='w-full lg:w-[85%]'>
-              <img className='w-full rounded-md' src="https://suvidhafashion.com/cdn/shop/files/44.png?v=1757924170&width=500" alt="" />
+              <img className='w-full rounded-md'  src={product.product?.images[activeImage]} alt="" />
             </div>
           </section>
 
           <section>
-            <h1 className='font-bold text-lg text-primary'>Brand Name</h1>
-            <p className='text-gray-500 font-semibold'>Men black shirt</p>
+            <h1 className='font-bold text-lg text-primary'>{product.product?.seller?.businessDetails?.businessName}</h1>
+            <p className='text-gray-500 font-semibold'>{product.product?.title}</p>
             <div className='flex justify-between items-center py-2 border w-[180px] px-3 mt-5'>
               <div className='flex gap-1 items-center'>
                 <span>4</span>
@@ -39,13 +60,13 @@ const ProductDetails = () => {
            <div>
              <div className='price flex items-center gap-3 mt-5 text-2xl'>
                 <span className='font-sans text-gray-800'>
-                    ₹ 400
+                    {product.product?.sellingPrice}
                 </span>
                 <span className='line-through'>
-                    999
+                    {product.product?.mrpPrice}
                 </span>
                 <span className='text-primary font-semibold'>
-                    60%
+                    {product.product?.discountPercent} %
                 </span>
              </div>
              <p className='text-sm'>Inclusive of all taxes free shipping above 1500.</p>
@@ -104,7 +125,7 @@ const ProductDetails = () => {
           </div>
         <div className='mt-5'>
           <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Provident delectus accusamus itaque aspernatur sit error voluptatem, quae corporis tempore dolore, suscipit perferendis praesentium quasi autem quis velit nemo non veniam!
+           {product.product?.description}
           </p>
         </div>
         <div className='mt-7 space-y-5'>
