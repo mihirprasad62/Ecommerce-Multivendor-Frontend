@@ -20,6 +20,7 @@ import AdminDashboard from './admin/Pages/Dashboard/AdminDashboard';
 import { fetchProducts } from './State/fetchProduct';
 import { useAppDispatch, useAppSelector } from './State/Store';
 import { fetchSellerProfile } from './State/seller/sellerSlice';
+import Auth from './customer/pages/Auth/Auth';
 
 const App = () => {
   const dispatch=useAppDispatch()
@@ -47,6 +48,7 @@ const App = () => {
     <Navbar/>
       <Routes>
         <Route path='/' element={<Home/>}/>
+        <Route path='/login' element={<Auth/>}/>
         <Route path='/products/:category' element={<Product/>}/>
         <Route path='/reviews/:productId' element={<Review/>}/>
         <Route path='/product-details/:categoryId/:name/:productId' element={<ProductDetails/>}/>
