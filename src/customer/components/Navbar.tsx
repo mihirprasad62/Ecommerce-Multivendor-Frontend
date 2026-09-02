@@ -10,6 +10,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import CategorySheet from './CategorySheet';
 import { rootCategory } from "../../data/category/mainCategory";
 import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../../State/Store';
 
 const Navbar = () => {
     const theme = useTheme();
@@ -17,6 +18,7 @@ const Navbar = () => {
     const [selectedCategory, setSelectedCategory] = useState("men");
     const [showCategorySheet, setShowCategorySheet] = useState(false);
     const navigate=useNavigate()
+    const {auth}=useAppSelector(store=>store)
     return (
         <>
 
@@ -62,10 +64,10 @@ const Navbar = () => {
                         </IconButton>
                         {/* 2. login button */}
                         {
-                            false ? <Button onClick={()=>navigate('/account/orders')} className='flex items-center gap-2'>
+                            auth.user ? <Button onClick={()=>navigate('/account/orders')} className='flex items-center gap-2'>
                                 <Avatar
                                     sx={{ width: 29, height: 29 }} src='https://cdn.pixabay.com/photo/2015/04/15/09/28/head-723540_640.jpg' />
-                                <h1 className='font-semibold hidden lg:block'>Zosh</h1>
+                                <h1 className='font-semibold hidden lg:block'>{auth.user?.fullName}</h1>
                             </Button>
                                 : <Button onClick={()=>navigate("/login")} variant='contained'>Login</Button>
                         }
